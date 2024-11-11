@@ -39,5 +39,313 @@
     ],
     "createdAt": "2024-11-11T12:55:31.699Z",
     "updatedAt": "2024-11-11T12:55:31.700Z"
+  },
+  {
+    "id": "3eb2048c-035a-4412-a02b-d361312b6ae6",
+    "title": "Luxury Hotel",
+    "description": "A luxurious stay in the heart of the city.",
+    "capacity": {
+      "guests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1
+    },
+    "location": {
+      "address": "123 Main St, Cityville",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Parking",
+      "Pool"
+    ],
+    "rooms": [
+      {
+        "title": "Master Bedroom",
+        "bedCount": 1
+      },
+      {
+        "title": "Guest Room",
+        "bedCount": 2
+      }
+    ],
+    "createdAt": "2024-11-11T16:47:05.835Z",
+    "updatedAt": "2024-11-11T16:47:05.835Z"
+  },
+  {
+    "id": "a6736643-1716-4e8b-abe5-766228003af1",
+    "title": "Luxury Hotel",
+    "description": "A luxurious stay in the city.",
+    "capacity": {
+      "guests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1
+    },
+    "location": {
+      "address": "123 Main St, Cityville",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Parking",
+      "Pool"
+    ],
+    "rooms": [
+      {
+        "title": "Master Bedroom",
+        "bedCount": 1
+      },
+      {
+        "title": "Guest Room",
+        "bedCount": 2
+      }
+    ],
+    "createdAt": "2024-11-11T17:00:16.677Z",
+    "updatedAt": "2024-11-11T17:00:16.677Z"
+  },
+  {
+    "id": "a2d4ffe5-a43c-4ce3-aaac-482072fe1def",
+    "title": "Luxury Hotel",
+    "description": "A luxurious stay in the city.",
+    "capacity": {
+      "guests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1
+    },
+    "location": {
+      "address": "123 Main St, Cityville",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Parking",
+      "Pool"
+    ],
+    "rooms": [
+      {
+        "title": "Master Bedroom",
+        "bedCount": 1
+      },
+      {
+        "title": "Guest Room",
+        "bedCount": 2
+      }
+    ],
+    "createdAt": "2024-11-11T17:01:20.314Z",
+    "updatedAt": "2024-11-11T17:01:20.315Z"
+  },
+  {
+    "id": "50312af7-0f66-4428-a06e-1d548e2ddca7",
+    "title": "Luxury Hotel",
+    "description": "A luxurious stay in the city.",
+    "capacity": {
+      "guests": 4,
+      "bedrooms": 2,
+      "bathrooms": 1
+    },
+    "location": {
+      "address": "123 Main St, Cityville",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Parking",
+      "Pool"
+    ],
+    "rooms": [
+      {
+        "title": "Master Bedroom",
+        "bedCount": 1
+      },
+      {
+        "title": "Guest Room",
+        "bedCount": 2
+      }
+    ],
+    "createdAt": "2024-11-11T17:09:37.263Z",
+    "updatedAt": "2024-11-11T17:09:37.263Z"
+  },
+  {
+    "id": "86264d3a-dde0-4071-b1b8-7d81698fba3b",
+    "title": "season Hotel",
+    "description": "A luxurious stay in the city.",
+    "capacity": {
+      "guests": 2,
+      "bedrooms": 1,
+      "bathrooms": 1
+    },
+    "location": {
+      "address": "123 Main St, Cityville",
+      "latitude": 40.7128,
+      "longitude": -74.006
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Parking",
+      "Pool"
+    ],
+    "rooms": [
+      {
+        "title": "Master Bedroom",
+        "bedCount": 1
+      },
+      {
+        "title": "Guest Room",
+        "bedCount": 2
+      }
+    ],
+    "createdAt": "2024-11-11T17:10:41.831Z",
+    "updatedAt": "2024-11-11T17:10:41.832Z"
+  },
+  {
+    "id": "bfd895d2-71bc-455c-8dfa-67bc8187b103",
+    "message": "Hotel created successfully",
+    "data": {
+      "id": "2",
+      "title": "season Hotel",
+      "description": "A luxurious stay in the city.",
+      "capacity": {
+        "guests": 2,
+        "bedrooms": 1,
+        "bathrooms": 1
+      },
+      "location": {
+        "address": "123 Main St, Cityville",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "host": {
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "phone": "123-456-7890"
+      },
+      "amenities": [
+        "WiFi",
+        "Parking",
+        "Pool"
+      ],
+      "rooms": [
+        {
+          "title": "Master Bedroom",
+          "bedCount": 1
+        },
+        {
+          "title": "Guest Room",
+          "bedCount": 2
+        }
+      ]
+    },
+    "createdAt": "2024-11-11T17:18:24.965Z",
+    "updatedAt": "2024-11-11T17:18:24.965Z"
+  },
+  {
+    "id": "a5a2a45a-5479-4988-be05-9e77ef60bd4c",
+    "message": "Hotel created successfully",
+    "data": {
+      "id": "2",
+      "title": "season Hotel",
+      "description": "A luxurious stay in the city.",
+      "capacity": {
+        "guests": 2,
+        "bedrooms": 1,
+        "bathrooms": 1
+      },
+      "location": {
+        "address": "123 Main St, Cityville",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "host": {
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "phone": "123-456-7890"
+      },
+      "amenities": [
+        "WiFi",
+        "Parking",
+        "Pool"
+      ],
+      "rooms": [
+        {
+          "title": "Master Bedroom",
+          "bedCount": 1
+        },
+        {
+          "title": "Guest Room",
+          "bedCount": 2
+        }
+      ]
+    },
+    "createdAt": "2024-11-11T17:23:50.965Z",
+    "updatedAt": "2024-11-11T17:23:50.965Z"
+  },
+  {
+    "id": "b7b98541-d873-4690-adfc-dd22aed71a38",
+    "message": "Hotel created successfully",
+    "data": {
+      "id": "4",
+      "title": "season Hotel",
+      "description": "A luxurious stay in the city.",
+      "capacity": {
+        "guests": 2,
+        "bedrooms": 1,
+        "bathrooms": 1
+      },
+      "location": {
+        "address": "123 Main St, Cityville",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "host": {
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "phone": "123-456-7890"
+      },
+      "amenities": [
+        "WiFi",
+        "Parking",
+        "Pool"
+      ],
+      "rooms": [
+        {
+          "title": "Master Bedroom",
+          "bedCount": 1
+        },
+        {
+          "title": "Guest Room",
+          "bedCount": 2
+        }
+      ]
+    },
+    "createdAt": "2024-11-11T17:33:10.292Z",
+    "updatedAt": "2024-11-11T17:46:41.038Z"
   }
 ]
