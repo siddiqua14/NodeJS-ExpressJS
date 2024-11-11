@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "id": "ae69edd6-bd81-46d6-84ce-f462c3a06631",
+    "title": "Luxury Suite",
+    "description": "A luxurious suite with ocean views",
+    "capacity": {
+      "guests": 4,
+      "bedrooms": 2,
+      "bathrooms": 2
+    },
+    "location": {
+      "address": "123 Ocean Drive, Miami Beach, FL",
+      "latitude": 25.790654,
+      "longitude": -80.130045
+    },
+    "host": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "123-456-7890"
+    },
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Breakfast"
+    ],
+    "rooms": [
+      {
+        "id": "room1",
+        "title": "Master Bedroom",
+        "bedCount": 1,
+        "images": []
+      },
+      {
+        "id": "room2",
+        "title": "Guest Bedroom",
+        "bedCount": 2,
+        "images": []
+      }
+    ],
+    "createdAt": "2024-11-11T12:55:31.699Z",
+    "updatedAt": "2024-11-11T12:55:31.700Z"
+  }
+]
