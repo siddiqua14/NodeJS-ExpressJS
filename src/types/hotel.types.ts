@@ -7,6 +7,8 @@ export interface Room {
 
 export interface Hotel {
     id: string;
+    simpleId: number; 
+    slug: string;
     title: string;
     description: string;
     capacity: {
@@ -26,8 +28,11 @@ export interface Hotel {
     };
     amenities: string[];
     rooms: Room[];
+    images?: string[]; // New optional field for image paths
     createdAt: string;
     updatedAt: string;
 }
 
-export type CreateHotelDto = Omit<Hotel, 'id' | 'createdAt' | 'updatedAt'>;
+// src/types/hotel.types.ts
+export type CreateHotelDto = Omit<Hotel, 'id' | 'simpleId' | 'slug' | 'createdAt' | 'updatedAt'>;
+

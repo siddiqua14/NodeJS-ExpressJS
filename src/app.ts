@@ -4,7 +4,7 @@ import path from 'path';
 import hotelRoutes from './routes/hotel.routes';
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
 app.use('/api', hotelRoutes);
