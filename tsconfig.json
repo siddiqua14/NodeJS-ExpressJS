@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "target": "es6",                 // Set the JavaScript language version.
-    "module": "commonjs",               // Use CommonJS module system for Node.js compatibility.
+    "module": "commonjs",  
+    "moduleResolution": "node",             // Use CommonJS module system for Node.js compatibility.
     "rootDir": "./src",                 // Source files location.
     "outDir": "./dist",                 // Output location for compiled files.
     "esModuleInterop": true,            // Enables compatibility for ES modules and CommonJS.
     "forceConsistentCasingInFileNames": true, // Ensures consistent case usage in file imports.
     "strict": true,                     // Enable strict type checking.
-    "skipLibCheck": true                // Skip type checking of declaration files.
+    "skipLibCheck": true,
+    "resolveJsonModule": true,                // Skip type checking of declaration files.
   },
   "include": ["src/**/*.ts"],            // Ensure only .ts files in src are compiled.
   "exclude": ["node_modules", "dist"]    // Exclude unnecessary folders.

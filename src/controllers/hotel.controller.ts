@@ -1,91 +1,106 @@
-// src/controllers/hotel.controller.ts
 import { Request, Response } from 'express';
-import { HotelModel } from '../models/hotel.model';
-import { CreateHotelDto } from '../types/hotel.types';
 import fs from 'fs';
-import multer from 'multer';
 import path from 'path';
+import slugify from 'slugify';
+import { Hotel } from '../models/hotel.types';
 
-// Setup multer for handling image uploads
-const upload = multer({
-    dest: path.join(__dirname, '../../uploads'),  // Directory for storing images
-    limits: { fileSize: 5 * 1024 * 1024 },  // Limit file size to 5MB
-});
+const dataPath = path.resolve(__dirname, '../data');
+// Helper to construct file path
+const getHotelFilePath = (id: string): string => {
+    return path.join(dataPath, `${id}.json`);
+};
 
-export class HotelController {
-    static async createHotel(req: Request, res: Response) {
+
+export const createHotel = (req: Request, res: Response): void => {
+    const { title } = req.body;
+
+    const newHotel: Hotel = {
+        ...req.body,
+        id: new Date().getTime().toString(),
+        slug: slugify(title, { lower: true }),
+        rooms: req.body.rooms || []
+    };
+
+    if (!fs.existsSync(dataPath)) {
+        fs.mkdirSync(dataPath, { recursive: true });
+    }
+
+    fs.writeFileSync(`${dataPath}/${newHotel.id}.json`, JSON.stringify(newHotel, null, 2));
+    res.status(201).json({ message: 'Hotel created successfully', hotel: newHotel });
+};
+
+// Helper to get hotel by slug
+const getHotelBySlug = (slug: string): Hotel | null => {
+    const files = fs.readdirSync(dataPath);
+    for (const file of files) {
+        const hotelData = fs.readFileSync(path.join(dataPath, file), 'utf-8');
+        const hotel: Hotel = JSON.parse(hotelData);
+        if (hotel.slug === slug) {
+            return hotel;
+        }
+    }
+    return null;
+};
+// Controller function to get hotel by ID or slug
+export const getHotelByIdOrSlug = (req: Request, res: Response): any => {
+    const { idOrSlug } = req.params;
+
+    // Attempt to fetch hotel by numeric ID first
+    const filePath = getHotelFilePath(idOrSlug);
+    if (fs.existsSync(filePath)) {
         try {
-            const hotelData: CreateHotelDto = req.body;
-            const newHotel = await HotelModel.createHotel(hotelData);
-            res.status(201).json({ message: 'Hotel created successfully', data: newHotel });
+            const hotelData = fs.readFileSync(filePath, 'utf-8');
+            const hotel = JSON.parse(hotelData);
+            return res.status(200).json(hotel);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to create hotel' });
+            console.error('Error reading hotel data by ID:', error);
+            return res.status(500).json({ message: 'Internal server error' });
         }
     }
 
-    // Retrieve a hotel by ID or slug
-    static async getHotel(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            // Check if the id is a valid UUID
-            const hotel = await HotelModel.getHotelById(id) || await HotelModel.getHotelBySimpleId(Number(id)) || await HotelModel.getHotelBySlug(id); // Check ID, SimpleId, and Slug
-
-            // If hotel not found by ID, try to fetch by slug
-            if (!hotel) {
-                return res.status(404).json({ error: 'Hotel not found' });
-            }
-    
-            res.json({ message: 'Hotel retrieved successfully', data: hotel });
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to get hotel' });
-        }
+    // If no file was found by ID, attempt to fetch by slug
+    const hotel = getHotelBySlug(idOrSlug);
+    if (hotel) {
+        return res.status(200).json(hotel);
     }
-    // Update a hotel
-    static async updateHotel(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            const updateData = req.body;
 
-            const hotel = await HotelModel.updateHotel(id, updateData);
-            if (!hotel) {
-                return res.status(404).json({ error: 'Hotel not found' });
-            }
+    return res.status(404).json({ message: 'Hotel not found' });
+};
 
-            res.json({ message: 'Hotel updated successfully', data: hotel });
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to update hotel' });
-        }
+export const updateHotelById = (req: Request, res: Response): any => {
+    const { id } = req.params;
+    const filePath = path.join(dataPath, `${id}.json`);
+
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: 'Hotel not found' });
     }
-    // Upload multiple images for a hotel
-    static async uploadImages(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            const files = req.files as Express.Multer.File[];
 
-            if (!files || files.length === 0) {
-                return res.status(400).json({ error: 'No files uploaded' });
-            }
+    const hotel = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const { title } = req.body;
 
-            // Extract image URLs
-            const imageUrls = files.map(file => `http://localhost:5050/uploads/${file.filename}`);
+    const updatedHotel: Hotel = {
+        ...hotel,
+        ...req.body,
+        slug: title ? slugify(title, { lower: true }) : hotel.slug
+    };
 
-            // Retrieve the hotel by ID
-            const hotel = await HotelModel.getHotelById(id);
-            if (!hotel) {
-                return res.status(404).json({ error: 'Hotel not found' });
-            }
+    fs.writeFileSync(filePath, JSON.stringify(updatedHotel, null, 2));
+    res.status(200).json({ message: 'Hotel updated successfully', hotel: updatedHotel });
+};
 
-            // Add the image URLs to the hotel data
-            hotel.images = [...(hotel.images || []), ...imageUrls];
-            await HotelModel.updateHotel(id, hotel);
 
-            res.json({ message: 'Images uploaded successfully', data: hotel });
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to upload images' });
-        }
+export const uploadImages = (req: Request, res: Response): any => {
+    const { id } = req.body;
+    const hotelPath = path.join(dataPath, `${id}.json`);
+
+    if (!fs.existsSync(hotelPath)) {
+        return res.status(404).json({ message: 'Hotel not found' });
     }
-    // Commented out for now as per requirements
-    // static async uploadImages(req: Request, res: Response) {
-    // }
-}
-//export { upload };
+
+    const hotelData = JSON.parse(fs.readFileSync(hotelPath, 'utf-8'));
+    const imagePaths = (req.files as Express.Multer.File[]).map((file) => `http://${req.get('host')}/uploads/${file.filename}`);
+    hotelData.images = hotelData.images ? [...hotelData.images, ...imagePaths] : imagePaths;
+
+    fs.writeFileSync(hotelPath, JSON.stringify(hotelData, null, 2));
+    res.status(200).json({ message: 'Images uploaded successfully', images: imagePaths });
+};
