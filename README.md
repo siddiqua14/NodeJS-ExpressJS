@@ -13,7 +13,7 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 - [Testing](#testing)
 
 ## Installation
-```markdown
+
 ### Step 1: Clone the Repository
 
 git clone <your-repo-url>
