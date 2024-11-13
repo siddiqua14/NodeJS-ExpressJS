@@ -8,10 +8,30 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 - [Installation](#installation)
 - [Database Setup](#database-setup)
 - [File Structure](#file-structure)
+- [Hotel Data Schema](#hotel-data-schema)
 - [Setup and Configuration](#setup-and-configuration)
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
+
+## Technical Requirements
+
+- **Node.js** and **Express.js**: The API is built using Node.js for the runtime environment and Express.js as the web framework.
+  
+- **TypeScript**: TypeScript is used for better code quality, enhanced developer experience, and type safety in the codebase.
+  
+- **Data Storage**: Data is stored in **JSON files** (instead of a database) under the `data` folder. Each hotel and room's information is saved as individual JSON files.
+  
+- **File Uploads**: **Multer** is used to handle image uploads for hotels and rooms. Images are saved in the `uploads` directory.
+
+- **Data Validation & Error Handling**: 
+  - All incoming data is validated to ensure it meets the necessary criteria.
+  - Errors are handled properly with appropriate error messages returned to the client.
+  
+- **HTTP Status Codes**:
+  - **200 OK** for successful operations (e.g., data retrieval, updates).
+  - **404 Not Found** for resources that cannot be found.
+  - **500 Internal Server Error** for unexpected issues or server failures. 
 
 ## Features
 - **Hotel Management**: Create, update, and fetch hotels by ID or slug.
@@ -75,6 +95,35 @@ hotel-api/ <br>
 ├── package.json                      # Project dependencies and scripts<br>
 ├── README.md<br>
 └── tsconfig.json                     # TypeScript configuration<br>
+## Hotel Data Schema
+
+The hotel data is structured in a JSON format with the following fields:
+
+### Hotel Object
+
+- **ID**: Unique identifier for the hotel.
+- **Slug**: A URL-friendly version of the hotel title (e.g., "grand-hotel").
+- **Title**: Name of the hotel.
+- **Description**: A brief description of the hotel.
+- **Guest Count**: The maximum number of guests the hotel can accommodate.
+- **Bedroom Count**: The number of bedrooms available in the hotel.
+- **Bathroom Count**: The number of bathrooms available in the hotel.
+- **Amenities**: A list of amenities offered by the hotel (e.g., WiFi, Air Conditioning).
+- **Host Information**: Details about the host (e.g., name, contact).
+- **Address**: The physical address of the hotel.
+- **Latitude**: The geographical latitude of the hotel.
+- **Longitude**: The geographical longitude of the hotel.
+- **Images**: Array of images representing the hotel (e.g., exterior, interior images).
+
+### Room Object (Multiple Rooms Per Hotel)
+
+- **Hotel Slug**: The slug for the hotel (used for linking rooms to their respective hotels).
+- **Room Slug**: A URL-friendly version of the room title (e.g., "room-1").
+- **Room Image**: An array of images representing the room.
+- **Room Title**: The title of the room (e.g., "Ocean View Room").
+- **Bedroom Count**: The number of bedrooms in the room.
+
+
 ## Setup and Configuration
 To add TypeScript to the project(if not), follow these steps:
 ### Step 1: Install TypeScript and TypeScript Definitions
@@ -192,21 +241,4 @@ To run the tests:
 `npm test`
 
 
-## Technical Requirements
 
-- **Node.js** and **Express.js**: The API is built using Node.js for the runtime environment and Express.js as the web framework.
-  
-- **TypeScript**: TypeScript is used for better code quality, enhanced developer experience, and type safety in the codebase.
-  
-- **Data Storage**: Data is stored in **JSON files** (instead of a database) under the `data` folder. Each hotel and room's information is saved as individual JSON files.
-  
-- **File Uploads**: **Multer** is used to handle image uploads for hotels and rooms. Images are saved in the `uploads` directory.
-
-- **Data Validation & Error Handling**: 
-  - All incoming data is validated to ensure it meets the necessary criteria.
-  - Errors are handled properly with appropriate error messages returned to the client.
-  
-- **HTTP Status Codes**:
-  - **200 OK** for successful operations (e.g., data retrieval, updates).
-  - **404 Not Found** for resources that cannot be found.
-  - **500 Internal Server Error** for unexpected issues or server failures.
