@@ -37,7 +37,7 @@ Install all necessary packages listed in `package.json` by running:
 - `slugify` - For generating URL-friendly slugs from titles
             - `npm install slugify`
 - `jest`, `supertest` - For testing API endpoints
-            - npm install jest --save-dev` , `npm install supertest --save-dev`
+            - `npm install jest --save-dev` , `npm install supertest --save-dev`
 
 ## Database Setup
 For this setup, storing data in JSON files under a `data` folder.
