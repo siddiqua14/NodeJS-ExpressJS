@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7574b55b-8663-43bd-b7de-e7f666a1a78d",
+		"_postman_id": "664d8ee4-c395-4faa-bea1-d360dfc2dc56",
 		"name": "hotel-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38811648"
+		"_exporter_id": "39645523"
 	},
 	"item": [
 		{
@@ -25,7 +25,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Sample Hotel\",\r\n  \"description\": \"A cozy place to stay\",\r\n  \"guestCount\": 4,\r\n  \"bedroomCount\": 2,\r\n  \"bathroomCount\": 1,\r\n  \"amenities\": [\"WiFi\", \"Air Conditioning\"],\r\n  \"host\": \"John Doe\",\r\n  \"address\": \"123 Street, City, Country\",\r\n  \"latitude\": 40.7128,\r\n  \"longitude\": -74.0060,\r\n  \"rooms\": [\r\n    {\r\n      \"hotelSlug\": \"sample-hotel\",\r\n      \"roomSlug\": \"room1\",\r\n      \"roomImage\": \"\",\r\n      \"roomTitle\": \"Room 1\",\r\n      \"bedroomCount\": 1\r\n    }\r\n  ]\r\n}\r\n",
+					"raw": "{\r\n  \"title\": \"Season Hotel\",\r\n  \"description\": \"A Luxury place to stay\",\r\n  \"guestCount\": 5,\r\n  \"bedroomCount\": 2,\r\n  \"bathroomCount\": 2,\r\n  \"amenities\": [\"WiFi\", \"Air Conditioning\"],\r\n  \"host\": \"John Doe\",\r\n  \"address\": \"123 Street, City, Country\",\r\n  \"latitude\": 40.7128,\r\n  \"longitude\": -74.0060,\r\n  \"rooms\": [\r\n    {\r\n      \"roomSlug\": \"room1\",\r\n      \"roomTitle\": \"Room 1\",\r\n      \"bedroomCount\": 1\r\n    }\r\n  ]\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -33,12 +33,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/hotel",
+					"raw": "http://localhost:5050/api/hotel",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "5050",
 					"path": [
 						"api",
 						"hotel"
@@ -54,7 +54,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Updated Hotel Title\",\r\n  \"description\": \"Updated description\",\r\n  \"guestCount\": 6,\r\n  \"bedroomCount\": 3,\r\n  \"bathroomCount\": 2,\r\n  \"amenities\": [\"WiFi\", \"Air Conditioning\", \"Pool\"],\r\n  \"host\": \"Jane Doe\",\r\n  \"address\": \"456 New Street, City, Country\",\r\n  \"latitude\": 41.1234,\r\n  \"longitude\": -75.1234,\r\n  \"rooms\": [\r\n    {\r\n      \"hotelSlug\": \"updated-hotel\",\r\n      \"roomSlug\": \"updated-room1\",\r\n      \"roomImage\": \"\",\r\n      \"roomTitle\": \"Updated Room 1\",\r\n      \"bedroomCount\": 1\r\n    }\r\n  ]\r\n}\r\n",
+					"raw": "{\r\n  \"title\": \"Updated Season Hotel\",\r\n  \"description\": \"An updated description\",\r\n  \"guestCount\": 10,\r\n  \"bathroomCount\": 3,\r\n  \"amenities\": [\"WiFi\", \"Air Conditioning\", \"Swimming Pool\"]\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,16 +62,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/hotel/1731426519587",
+					"raw": "http://localhost:5050/api/hotel/1731474562979",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "5050",
 					"path": [
 						"api",
 						"hotel",
-						"1731426519587"
+						"1731474562979"
 					]
 				}
 			},
@@ -95,16 +95,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/hotel/updated-hotel-title",
+					"raw": "http://localhost:5050/api/hotel/1731470739035",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "5050",
 					"path": [
 						"api",
 						"hotel",
-						"updated-hotel-title"
+						"1731470739035"
 					]
 				}
 			},
@@ -116,25 +116,32 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "1731426519587",
-							"type": "text"
-						},
-						{
-							"key": "images",
-							"type": "file",
-							"src": [
-								"postman-cloud:///1efa10df-3df2-48f0-b679-1b67250512b2",
-								"postman-cloud:///1efa10df-34a6-4300-b319-a8462d39b156"
-							]
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/images/1731426519587",
+					"raw": "http://localhost:5050/api/images/1731470739035",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						"api",
+						"images",
+						"1731470739035"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Roomimg",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/images/1731470739035/room1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -143,7 +150,8 @@
 					"path": [
 						"api",
 						"images",
-						"1731426519587"
+						"1731470739035",
+						"room1"
 					]
 				}
 			},
