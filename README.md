@@ -1,7 +1,7 @@
 # NodeJS-ExpressJS
 # Hotel API
 
-A backend API for managing hotels, rooms, and their images, allowing you to create, update, and retrieve hotel and room information with images.
+A backend API for managing hotels, rooms, and their images, allowing to create, update, and retrieve hotel and room information with images.
 
 ## Table of Contents
 - [Features](#features)
