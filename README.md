@@ -13,13 +13,13 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 - [Testing](#testing)
 
 ## Installation
-
+```markdown
 ### Step 1: Clone the Repository
-```bash
+
 git clone <your-repo-url>
 cd hotel-api
 
 ### Step 2: Install Required Packages
 Install all necessary packages listed in `package.json` by running:
-```bash
+
 npm install
