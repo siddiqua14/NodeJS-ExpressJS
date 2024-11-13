@@ -58,6 +58,7 @@ hotel-api/ <br>
 |   ├── uploads/                      # Folder for storing uploaded images<br>
 |   |   └── rooms/                    # Folder for storing uploaded images-->Rooms<br>
 |   ├── validations/                  # Input validation rules and schemas<br>
+|   |   └── hotel.validation.ts  
 |   ├── app.ts                        # Main application file<br>
 |   └── server.ts                     # Server configuration and startup<br>
 |<br>
@@ -84,7 +85,7 @@ The API should now be running on http://localhost:5050.
 
 ### 1. Create a New Hotel
 - **Method**: `POST`
-- **Endpoint**: `/hotel`
+- **URL**: `http://localhost:5050/api/hotel`
 - **Body**:
     ```json
     {
@@ -111,7 +112,7 @@ The API should now be running on http://localhost:5050.
 
 ### 2. Get Hotel by ID or Slug
 - **Method**: `GET`
-- **Endpoint**: `/hotel/:idOrSlug`
+- **URL**: `http://localhost:5050/api/hotel/:idOrSlug`
 - **Response**: `200 OK` or `404 Not Found`
 
 ### 3. Update Hotel by ID
@@ -125,14 +126,14 @@ The API should now be running on http://localhost:5050.
 
 ### 4. Upload Hotel Images
 - **Method**: `POST`
-- **Endpoint**: `/images/:id`
+- **URL**: `http://localhost:5050/api/images/:id`
 - **Form-Data**:
     - `images`: Upload images in form-data with key `images`.
 - **Response**: `200 OK` or `404 Not Found`
 
 ### 5. Upload Room Images
 - **Method**: `POST`
-- **Endpoint**: `/room/images/:id/:roomSlug`
+- **URL**: `http://localhost:5050/api/room/images/:id/:roomSlug`
 - **Form-Data**:
     - `images`: Upload images in form-data with key `images`.
 - **Response**: `200 OK` or `404 Not Found`

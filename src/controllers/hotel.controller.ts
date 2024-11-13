@@ -28,7 +28,6 @@ export const createHotel = (req: Request, res: Response): void => {
     fs.writeFileSync(`${dataPath}/${newHotel.id}.json`, JSON.stringify(newHotel, null, 2));
     res.status(201).json({ message: 'Hotel created successfully', hotel: newHotel });
 };
-
 // Helper to get hotel by slug
 const getHotelBySlug = (slug: string): Hotel | null => {
     const files = fs.readdirSync(dataPath);
