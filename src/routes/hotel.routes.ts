@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { createHotel, getHotelByIdOrSlug, updateHotelById, uploadImages, uploadRoomImages } from '../controllers/hotel.controller';
 import { upload } from '../middleware/hotel.middleware';
-//import {  } from '../controllers/hotel.controller'; // Correct import
+import { createHotelValidation, updateHotelValidation, uploadRoomImagesValidation } from '../validations/hotel.validation';
+import { validationErrorHandler } from '../middleware/validationErrorHandler';
 
 import path from 'path';
 import fs from 'fs';
@@ -40,18 +41,45 @@ const storage = multer.diskStorage({
     }
 });
 
+// Hotel creation route with validation
+router.post(
+    '/hotel',
+    createHotelValidation, // Validation middleware
+    validationErrorHandler, // Handle validation errors
+    createHotel             // Controller for creating hotel
+);
 
-
-
-
-
-router.post('/hotel', createHotel);
+// Get hotel by ID or slug
 router.get('/hotel/:idOrSlug', getHotelByIdOrSlug);
-router.put('/hotel/:id', updateHotelById);
-router.post('/images/:id', upload.array('images', 10), uploadImages);
-// Route for uploading images to a specific room using hotelId and roomSlug
 
-// Define the route for uploading room images
-// Define the route for uploading room images
-router.post('/images/:id/:roomSlug', upload.array('images', 10), uploadRoomImages);
+// Update hotel by ID
+router.put(
+    '/hotel/:id',
+    updateHotelValidation,  // Validation middleware for updates
+    validationErrorHandler,  // Handle validation errors
+    updateHotelById          // Controller for updating hotel
+);
+
+// Upload hotel images
+router.post('/images/:id', upload.array('images', 10), uploadImages);
+
+// Upload room images with validation
+router.post(
+    '/room/images/:id/:roomSlug',
+    uploadRoomImagesValidation,  // Validation for room images
+    validationErrorHandler,      // Handle validation errors
+    upload.array('images', 10),   // Upload middleware
+    uploadRoomImages             // Controller for uploading room images
+);
+
+
+
+
+
+//router.post('/hotel', createHotel);
+//router.get('/hotel/:idOrSlug', getHotelByIdOrSlug);
+//router.put('/hotel/:id', updateHotelById);
+//router.post('/images/:id', upload.array('images', 10), uploadImages);
+
+//router.post('/images/:id/:roomSlug', upload.array('images', 10), uploadRoomImages);
 export default router;
