@@ -190,3 +190,23 @@ Ensure that you have the necessary test setup:
 ### Run Tests
 To run the tests:
 `npm test`
+
+
+## Technical Requirements
+
+- **Node.js** and **Express.js**: The API is built using Node.js for the runtime environment and Express.js as the web framework.
+  
+- **TypeScript**: TypeScript is used for better code quality, enhanced developer experience, and type safety in the codebase.
+  
+- **Data Storage**: Data is stored in **JSON files** (instead of a database) under the `data` folder. Each hotel and room's information is saved as individual JSON files.
+  
+- **File Uploads**: **Multer** is used to handle image uploads for hotels and rooms. Images are saved in the `uploads` directory.
+
+- **Data Validation & Error Handling**: 
+  - All incoming data is validated to ensure it meets the necessary criteria.
+  - Errors are handled properly with appropriate error messages returned to the client.
+  
+- **HTTP Status Codes**:
+  - **200 OK** for successful operations (e.g., data retrieval, updates).
+  - **404 Not Found** for resources that cannot be found.
+  - **500 Internal Server Error** for unexpected issues or server failures.
