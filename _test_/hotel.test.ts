@@ -1,6 +1,7 @@
 // _tests_/hotel.test.ts
 import request from 'supertest';
 import app from '../src/app'; // should work without errors
+import { Hotel } from '../src/models/hotel.types';
 
 describe("Hotel API", () => {
     let createdHotel: { id: string; slug: string };

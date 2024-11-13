@@ -104,46 +104,50 @@ export const uploadImages = (req: Request, res: Response): any => {
     res.status(200).json({ message: 'Images uploaded successfully', images: imagePaths });
 };
 // Controller to handle uploading room images
-export const uploadRoomImages = (req: Request, res: Response): Response => {
-    const hotelId = req.params.id; // Hotel ID from the route
-    const roomSlug = req.params.roomSlug; // Room slug from the route
+export const uploadRoomImages = (req: Request, res: Response): any => {
+    const hotelId = req.params.id; // Get hotel ID from the URL
+    const roomSlug = req.params.roomSlug; // Get room slug from the URL
+
+    console.log("Received Hotel ID:", hotelId);
+    console.log("Received Room Slug:", roomSlug);
+    console.log("Received files:", req.files);
 
     if (!hotelId || !roomSlug) {
         return res.status(400).json({ message: 'Hotel ID and Room Slug are required' });
     }
 
-    // Path to hotel data (this assumes data is stored in JSON files)
-    const hotelPath = path.join(__dirname, `../data/hotel-${hotelId}.json`);
-
+    // Path to the hotel data file
+    const hotelPath = path.join(__dirname, `../data/${hotelId}.json`);
     if (!fs.existsSync(hotelPath)) {
         return res.status(404).json({ message: 'Hotel not found' });
     }
 
+    // Read the hotel data
     const hotelData = JSON.parse(fs.readFileSync(hotelPath, 'utf-8'));
 
-    const room = hotelData.rooms.find((room: any) => room.slug === roomSlug);
+    // Find the room by roomSlug
+    const room = hotelData.rooms.find((r: any) => r.roomSlug === roomSlug);
     if (!room) {
         return res.status(404).json({ message: 'Room not found' });
     }
 
-    // Check if files are uploaded
-    if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
-        return res.status(400).json({ message: 'No files uploaded' });
-    }
-
-    // Generate URLs for uploaded room images
-    const imageUrls = (req.files as Express.Multer.File[]).map(file => {
-        return `http://${req.get('host')}/uploads/rooms/${hotelId}/${roomSlug}/${file.filename}`;
+    // Generate the image URLs (assuming the images are uploaded to the 'uploads/rooms' folder)
+    const imagePaths = (req.files as Express.Multer.File[]).map((file) => {
+        return `http://${req.get('host')}/uploads/rooms/${file.filename}`;
     });
 
-    room.roomImages = room.roomImages ? [...room.roomImages, ...imageUrls] : imageUrls;
+    // Add the images to the room's roomImage property
+    room.roomImage = room.roomImage ? [...room.roomImage, ...imagePaths] : imagePaths;
 
+    // Save the updated hotel data
     try {
         fs.writeFileSync(hotelPath, JSON.stringify(hotelData, null, 2));
-        return res.status(200).json({ message: 'Room images uploaded successfully', images: imageUrls });
+        console.log("Updated hotel data saved");
+
+        // Respond with success message
+        return res.status(200).json({ message: 'Room images uploaded successfully', images: imagePaths });
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error saving hotel data' });
+        console.error("Error saving updated hotel data:", err);
+        return res.status(500).json({ message: 'Internal server error' });
     }
-    
 };

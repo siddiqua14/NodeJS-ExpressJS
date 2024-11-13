@@ -10,9 +10,9 @@ app.use(express.json());
 app.use('/api', hotelRoutes);
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-const port = 5000;
+const port = 5050;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-//export default app; // Export the app for use in tests
+export default app; // Export the app for use in tests
