@@ -103,7 +103,6 @@ export const uploadImages = (req: Request, res: Response): any => {
     res.status(200).json({ message: 'Images uploaded successfully', images: imagePaths });
 };
 
-
 // Controller for uploading room images
 export const uploadRoomImages = (req: Request, res: Response): any => {
     const hotelId = req.params.id;

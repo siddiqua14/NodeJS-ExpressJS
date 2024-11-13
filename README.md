@@ -8,6 +8,7 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 - [Installation](#installation)
 - [Database Setup](#database-setup)
 - [File Structure](#file-structure)
+- [Setup and Configuration](#setup-and-configuration)
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
@@ -29,10 +30,14 @@ Install all necessary packages listed in `package.json` by running:
 
 #### Packages Installed
 - `express` - Fast and lightweight web framework for Node.js
+            - `npm install express`
 - `multer` - Middleware for handling file uploads
+            -`npm install multer`
 - `path`, `fs` - Node.js native modules for file and path operations
 - `slugify` - For generating URL-friendly slugs from titles
+            - `npm install slugify`
 - `jest`, `supertest` - For testing API endpoints
+            - npm install jest --save-dev` , `npm install supertest --save-dev`
 
 ## Database Setup
 For this setup, storing data in JSON files under a `data` folder.
@@ -70,7 +75,44 @@ hotel-api/ <br>
 ├── package.json                      # Project dependencies and scripts<br>
 ├── README.md<br>
 └── tsconfig.json                     # TypeScript configuration<br>
-
+## Setup and Configuration
+To add TypeScript to the project(if not), follow these steps:
+### Step 1: Install TypeScript and TypeScript Definitions
+Compile the code by running:
+- `npm install typescript --save-dev`
+- `npm install @types/node --save-dev`
+### Step 2: Initialize a `tsconfig.json` File
+- `npx tsc --init`
+- In my project updated `tsconfig.json` with the following configuration:
+```json
+{
+    "compilerOptions": {
+        "target": "es6",                   // Set the JavaScript language version.
+        "module": "commonjs",              // Module system for Node.js compatibility.
+        "moduleResolution": "node",        // Use Node.js resolution strategy.
+        "rootDir": "./src",                // Location of your source files.
+        "outDir": "./dist",                // Location for compiled files.
+        "esModuleInterop": true,           // Enables compatibility with ES modules and CommonJS.
+        "strict": true,                    // Enable strict type checking.
+        "skipLibCheck": true,
+        "resolveJsonModule": true          // Allow importing JSON files.
+    },
+    "include": ["src/**/*.ts"],          // Ensure only .ts files in src are compiled.
+    "exclude": ["node_modules", "dist"]  // Exclude unnecessary folders.
+}
+```
+### Step 3: Modify `package.json`
+```json
+"scripts": {
+  "start": "node dist/app.js",        // Start the compiled JavaScript file.
+  "dev": "nodemon --exec ts-node src/app.ts", // For running in development with automatic reloading.
+  "build": "tsc",                     // Compile TypeScript files.
+  "test": "jest",                     // Run tests using Jest.
+  "test:watch": "jest --watch"        // Run tests with watch mode.
+}
+```
+### Step 4: Install Development Dependencies
+- `npm install ts-node nodemon --save-dev`
 ## Running the Application
 
 ### Step 1: Compile TypeScript

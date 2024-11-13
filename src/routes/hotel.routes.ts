@@ -72,14 +72,9 @@ router.post(
     uploadRoomImages             // Controller for uploading room images
 );
 
-
-
-
-
 //router.post('/hotel', createHotel);
 //router.get('/hotel/:idOrSlug', getHotelByIdOrSlug);
 //router.put('/hotel/:id', updateHotelById);
 //router.post('/images/:id', upload.array('images', 10), uploadImages);
-
 //router.post('/images/:id/:roomSlug', upload.array('images', 10), uploadRoomImages);
 export default router;

@@ -1,131 +1,116 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HotelController = void 0;
-const hotel_model_1 = require("../models/hotel.model");
-class HotelController {
-    static createHotel(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const hotelData = req.body;
-                // Basic validation
-                if (!hotelData.title || !hotelData.location || !hotelData.host) {
-                    res.status(400).json({
-                        success: false,
-                        error: 'Missing required fields'
-                    });
-                    return;
-                }
-                const newHotel = yield hotel_model_1.HotelModel.createHotel(hotelData);
-                res.status(201).json({
-                    success: true,
-                    message: 'Hotel created successfully',
-                    data: newHotel
-                });
-            }
-            catch (error) {
-                res.status(500).json({
-                    success: false,
-                    error: error.message || 'Failed to create hotel'
-                });
-            }
-        });
+exports.uploadRoomImages = exports.uploadImages = exports.updateHotelById = exports.getHotelByIdOrSlug = exports.createHotel = void 0;
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const slugify_1 = __importDefault(require("slugify"));
+const dataPath = path_1.default.resolve(__dirname, '../data');
+// Helper to construct file path
+const getHotelFilePath = (id) => {
+    return path_1.default.join(dataPath, `${id}.json`);
+};
+// Controller function for creating a hotel
+const createHotel = (req, res) => {
+    const { title } = req.body;
+    const newHotel = Object.assign(Object.assign({}, req.body), { id: new Date().getTime().toString(), slug: (0, slugify_1.default)(title, { lower: true }), rooms: req.body.rooms || [] });
+    if (!fs_1.default.existsSync(dataPath)) {
+        fs_1.default.mkdirSync(dataPath, { recursive: true });
     }
-    static getHotel(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = req.params;
-                const hotel = yield hotel_model_1.HotelModel.getHotelById(id);
-                if (!hotel) {
-                    res.status(404).json({
-                        success: false,
-                        error: 'Hotel not found'
-                    });
-                    return;
-                }
-                res.json({
-                    success: true,
-                    message: 'Hotel retrieved successfully',
-                    data: hotel
-                });
-            }
-            catch (error) {
-                res.status(500).json({
-                    success: false,
-                    error: error.message || 'Failed to get hotel'
-                });
-            }
-        });
+    fs_1.default.writeFileSync(`${dataPath}/${newHotel.id}.json`, JSON.stringify(newHotel, null, 2));
+    res.status(201).json({ message: 'Hotel created successfully', hotel: newHotel });
+};
+exports.createHotel = createHotel;
+// Helper to get hotel by slug
+const getHotelBySlug = (slug) => {
+    const files = fs_1.default.readdirSync(dataPath);
+    for (const file of files) {
+        const hotelData = fs_1.default.readFileSync(path_1.default.join(dataPath, file), 'utf-8');
+        const hotel = JSON.parse(hotelData);
+        if (hotel.slug === slug) {
+            return hotel;
+        }
     }
-    static updateHotel(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = req.params;
-                const updateData = req.body;
-                const hotel = yield hotel_model_1.HotelModel.updateHotel(id, updateData);
-                if (!hotel) {
-                    res.status(404).json({
-                        success: false,
-                        error: 'Hotel not found'
-                    });
-                    return;
-                }
-                res.json({
-                    success: true,
-                    message: 'Hotel updated successfully',
-                    data: hotel
-                });
-            }
-            catch (error) {
-                res.status(500).json({
-                    success: false,
-                    error: error.message || 'Failed to update hotel'
-                });
-            }
-        });
+    return null;
+};
+// Controller function to get hotel by ID or slug
+const getHotelByIdOrSlug = (req, res) => {
+    const { idOrSlug } = req.params;
+    // Attempt to fetch hotel by numeric ID first
+    const filePath = getHotelFilePath(idOrSlug);
+    if (fs_1.default.existsSync(filePath)) {
+        try {
+            const hotelData = fs_1.default.readFileSync(filePath, 'utf-8');
+            const hotel = JSON.parse(hotelData);
+            return res.status(200).json(hotel);
+        }
+        catch (error) {
+            console.error('Error reading hotel data by ID:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     }
-    static uploadImages(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = req.params;
-                const files = req.files;
-                if (!files || files.length === 0) {
-                    res.status(400).json({
-                        success: false,
-                        error: 'No files uploaded'
-                    });
-                    return;
-                }
-                const imageUrls = files.map(file => `/uploads/${file.filename}`);
-                const hotel = yield hotel_model_1.HotelModel.addHotelImages(id, imageUrls);
-                if (!hotel) {
-                    res.status(404).json({
-                        success: false,
-                        error: 'Hotel not found'
-                    });
-                    return;
-                }
-                res.json({
-                    success: true,
-                    message: 'Images uploaded successfully',
-                    data: hotel
-                });
-            }
-            catch (error) {
-                res.status(500).json({
-                    success: false,
-                    error: error.message || 'Failed to upload images'
-                });
-            }
-        });
+    // If no file was found by ID, attempt to fetch by slug
+    const hotel = getHotelBySlug(idOrSlug);
+    if (hotel) {
+        return res.status(200).json(hotel);
     }
-}
-exports.HotelController = HotelController;
+    return res.status(404).json({ message: 'Hotel not found' });
+};
+exports.getHotelByIdOrSlug = getHotelByIdOrSlug;
+const updateHotelById = (req, res) => {
+    const { id } = req.params;
+    const filePath = path_1.default.join(dataPath, `${id}.json`);
+    if (!fs_1.default.existsSync(filePath)) {
+        return res.status(404).json({ message: 'Hotel not found' });
+    }
+    const hotel = JSON.parse(fs_1.default.readFileSync(filePath, 'utf-8'));
+    const { title } = req.body;
+    const updatedHotel = Object.assign(Object.assign(Object.assign({}, hotel), req.body), { slug: title ? (0, slugify_1.default)(title, { lower: true }) : hotel.slug });
+    fs_1.default.writeFileSync(filePath, JSON.stringify(updatedHotel, null, 2));
+    res.status(200).json({ message: 'Hotel updated successfully', hotel: updatedHotel });
+};
+exports.updateHotelById = updateHotelById;
+const uploadImages = (req, res) => {
+    const { id } = req.body;
+    const hotelPath = path_1.default.join(dataPath, `${id}.json`);
+    if (!fs_1.default.existsSync(hotelPath)) {
+        return res.status(404).json({ message: 'Hotel not found' });
+    }
+    const hotelData = JSON.parse(fs_1.default.readFileSync(hotelPath, 'utf-8'));
+    const imagePaths = req.files.map((file) => `http://${req.get('host')}/uploads/${file.filename}`);
+    hotelData.images = hotelData.images ? [...hotelData.images, ...imagePaths] : imagePaths;
+    fs_1.default.writeFileSync(hotelPath, JSON.stringify(hotelData, null, 2));
+    res.status(200).json({ message: 'Images uploaded successfully', images: imagePaths });
+};
+exports.uploadImages = uploadImages;
+// Controller for uploading room images
+const uploadRoomImages = (req, res) => {
+    const hotelId = req.params.id;
+    const roomSlug = req.params.roomSlug;
+    if (!hotelId || !roomSlug) {
+        return res.status(400).json({ message: 'Hotel ID and Room Slug are required' });
+    }
+    const hotelPath = path_1.default.join(__dirname, `../data/${hotelId}.json`);
+    if (!fs_1.default.existsSync(hotelPath)) {
+        return res.status(404).json({ message: 'Hotel not found' });
+    }
+    const hotelData = JSON.parse(fs_1.default.readFileSync(hotelPath, 'utf-8'));
+    const room = hotelData.rooms.find((r) => r.roomSlug === roomSlug);
+    if (!room) {
+        return res.status(404).json({ message: 'Room not found' });
+    }
+    const imagePaths = req.files.map((file) => {
+        return `http://${req.get('host')}/uploads/rooms/${file.filename}`;
+    });
+    room.roomImage = room.roomImage ? [...room.roomImage, ...imagePaths] : imagePaths;
+    try {
+        fs_1.default.writeFileSync(hotelPath, JSON.stringify(hotelData, null, 2));
+        return res.status(200).json({ message: 'Room images uploaded successfully', images: imagePaths });
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+exports.uploadRoomImages = uploadRoomImages;
