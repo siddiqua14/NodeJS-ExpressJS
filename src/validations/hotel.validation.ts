@@ -1,4 +1,3 @@
-// src/validations/hotel.validation.ts
 import { body, param } from 'express-validator';
 
 export const createHotelValidation = [
@@ -18,7 +17,7 @@ export const createHotelValidation = [
 ];
 
 export const updateHotelValidation = [
-    body('title').optional().notEmpty().withMessage('Title is required'),
+    body('title').optional().notEmpty().withMessage('Title must not be empty when provided'),
     body('description').optional().isString().withMessage('Description must be a string'),
     body('guestCount').optional().isInt({ min: 1 }).withMessage('Guest count must be at least 1'),
     body('bedroomCount').optional().isInt({ min: 1 }).withMessage('Bedroom count must be at least 1'),

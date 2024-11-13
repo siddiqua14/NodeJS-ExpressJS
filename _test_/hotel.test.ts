@@ -64,4 +64,50 @@ describe('Hotel API Tests', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toBe('Room images uploaded successfully');
     });
+    // Test for Hotel Creation Validation
+    it('should return 400 if required fields are missing when creating a hotel', async () => {
+        const invalidHotelData = {
+            // Missing 'title' and 'rooms' should trigger validation error
+            description: 'Hotel description',
+        };
+
+        const response = await request(app)
+            .post('/api/hotel')
+            .send(invalidHotelData);
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Validation failed: title, rooms');
+    });
+
+    it('should return 200 and create hotel with valid data', async () => {
+        const validHotelData = {
+            title: 'New Hotel',
+            description: 'Hotel description',
+            rooms: [
+                { title: 'Room A', slug: 'room-a' },
+                { title: 'Room B', slug: 'room-b' }
+            ]
+        };
+
+        const response = await request(app)
+            .post('/api/hotel')
+            .send(validHotelData);
+
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe('Hotel created successfully');
+    });
+
+    // Test for Update Hotel Validation
+    it('should return 400 if required fields are missing when updating a hotel', async () => {
+        const invalidUpdateData = {
+            // Missing title
+        };
+
+        const response = await request(app)
+            .put('/api/hotel/1') // Assuming the hotel ID is 1
+            .send(invalidUpdateData);
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Validation failed: title');
+    });
 });

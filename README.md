@@ -20,7 +20,7 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 
 ### Step 1: Clone the Repository
 
-- `git clone [repo-url>](https://github.com/siddiqua14/NodeJS-ExpressJS.git)`
+- `git clone [https://github.com/siddiqua14/NodeJS-ExpressJS.git]`
 - `cd hotel-api`
 
 ### Step 2: Install Required Packages
