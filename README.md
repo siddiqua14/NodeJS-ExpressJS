@@ -6,7 +6,6 @@ A backend API for managing hotels, rooms, and their images, allowing you to crea
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
-- [Environment Setup](#environment-setup)
 - [Database Setup](#database-setup)
 - [File Structure](#file-structure)
 - [Running the Application](#running-the-application)
@@ -34,50 +33,51 @@ Install all necessary packages listed in `package.json` by running:
 - `path`, `fs` - Node.js native modules for file and path operations
 - `slugify` - For generating URL-friendly slugs from titles
 - `jest`, `supertest` - For testing API endpoints
-## Environment Setup
-1. Create an `.env` file in the root directory with the following variables:
-
-- PORT=5050
-2. Update other environment variables as needed, depending on your configuration (e.g., database connection, etc.).
 
 ## Database Setup
-For this setup, we are storing data in JSON files under a `data` folder.
+For this setup, storing data in JSON files under a `data` folder.
 ### Step 1: Create a Data Folder
 In the project root, create a `data` folder:
-mkdir data
-
+`mkdir data`
+This folder will store each hotel’s JSON file.
 ## File Structure
 project structure:
-        hotel-api/ <br>
-        │<br>
-        ├── src/<br>
-        │   ├── controllers/<br>
-        │   │   └── hotel.controller.ts       # Main controller for handling API logic
-        │   ├── middleware/
-        │   │   └── hotel.middleware.ts       # Middleware setup for file uploads (Multer)
-        │   ├── routes/
-        │   │   └── hotel.routes.ts           # API routes configuration
-        │   └── models/
-        │       └── hotel.types.ts            # TypeScript types for data
-        │
-        ├── uploads/                          # Folder for storing uploaded images
-        ├── data/                             # Folder for JSON data files
-        ├── _test_/
-        │   └── hotel.test.ts                 # Tests for API endpoints
-        │
-        ├── .env                              # Environment variables
-        ├── .gitignore                        # Files to ignore in git
-        ├── package.json                      # Project dependencies and scripts
-        └── README.md                         # Documentation
+hotel-api/
+│
+├── src/
+│   ├── controllers/
+│   │   └── hotel.controller.ts       # Main controller for handling API logic
+│   ├── middleware/
+│   │   └── hotel.middleware.ts       # Middleware setup for file uploads (Multer)
+│   │   └── validationErrorHandler.ts # Error handling middleware
+│   ├── routes/
+│   │   └── hotel.routes.ts           # API routes configuration
+│   ├── models/
+│   │   └── hotel.types.ts            # TypeScript types for data
+│   ├── data/                         # Folder for JSON data files
+|   ├── uploads/                      # Folder for storing uploaded images
+|   |   └── rooms/                    # Folder for storing uploaded images-->Rooms
+|   ├── validations/                  # Input validation rules and schemas
+|   ├── app.ts                        # Main application file
+|   └── server.ts                     # Server configuration and startup
+|
+├── _test_/                           # Folder containing test files
+│   └── hotel.test.ts                 # Tests for API endpoints
+├── hotel-api.postman_collection.json # Postman collection for API testing
+├── jest.config.js                    # Jest testing configuration
+├── package-lock.json                 
+├── package.json                      # Project dependencies and scripts
+├── README.md
+└── tsconfig.json                     # TypeScript configuration
 
 ## Running the Application
 
 ### Step 1: Compile TypeScript
 Compile the code by running:
-- npx tsc
+- `npx tsc`
 ### Step 2: Start the Server
 Start the server using:
-- npm start 
+- `npm start`
 The API should now be running on http://localhost:5050.
 
 ## API Endpoints
@@ -88,12 +88,23 @@ The API should now be running on http://localhost:5050.
 - **Body**:
     ```json
     {
-      "title": "Hotel Name",
-      "description": "Hotel Description",
-      "rooms": [
-        { "title": "Room A", "slug": "room-a" },
-        { "title": "Room B", "slug": "room-b" }
-      ]
+    "title": "Season Hotel",
+    "description": "A Luxury place to stay",
+    "guestCount": 5,
+    "bedroomCount": 2,
+    "bathroomCount": 2,
+    "amenities": ["WiFi", "Air Conditioning"],
+    "host": "John Doe",
+    "address": "123 Street, City, Country",
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "rooms": [
+        {
+        "roomSlug": "room1",
+        "roomTitle": "Room 1",
+        "bedroomCount": 1
+        }
+    ]
     }
     ```
 - **Response**: `201 Created`
@@ -126,9 +137,13 @@ The API should now be running on http://localhost:5050.
     - `images`: Upload images in form-data with key `images`.
 - **Response**: `200 OK` or `404 Not Found`
 ## Testing
+
 Jest and Supertest have been set up to test the API endpoints.
 
-Create a test file in `_test_/hotel.test.ts`.
-
-Run tests with:
-npm test -watch
+Ensure that you have the necessary test setup:
+- **Jest** is set up for running tests.
+- **Supertest** is used for making requests to the API during tests.
+- Test files are located in the `_test_/` directory. For example, the file `hotel.test.ts` contains tests for the hotel API.
+### Run Tests
+To run the tests:
+`npm test`
