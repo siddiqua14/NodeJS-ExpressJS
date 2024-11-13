@@ -42,33 +42,33 @@ In the project root, create a `data` folder:
 This folder will store each hotel’s JSON file.
 ## File Structure
 project structure:
-hotel-api/
-│
-├── src/
-│   ├── controllers/
-│   │   └── hotel.controller.ts       # Main controller for handling API logic
-│   ├── middleware/
-│   │   └── hotel.middleware.ts       # Middleware setup for file uploads (Multer)
-│   │   └── validationErrorHandler.ts # Error handling middleware
-│   ├── routes/
-│   │   └── hotel.routes.ts           # API routes configuration
-│   ├── models/
-│   │   └── hotel.types.ts            # TypeScript types for data
-│   ├── data/                         # Folder for JSON data files
-|   ├── uploads/                      # Folder for storing uploaded images
-|   |   └── rooms/                    # Folder for storing uploaded images-->Rooms
-|   ├── validations/                  # Input validation rules and schemas
-|   ├── app.ts                        # Main application file
-|   └── server.ts                     # Server configuration and startup
-|
-├── _test_/                           # Folder containing test files
-│   └── hotel.test.ts                 # Tests for API endpoints
-├── hotel-api.postman_collection.json # Postman collection for API testing
-├── jest.config.js                    # Jest testing configuration
-├── package-lock.json                 
-├── package.json                      # Project dependencies and scripts
-├── README.md
-└── tsconfig.json                     # TypeScript configuration
+hotel-api/ <br>
+│<br>
+├── src/<br>
+│   ├── controllers/<br>
+│   │   └── hotel.controller.ts       # Main controller for handling API logic<br>
+│   ├── middleware/<br>
+│   │   └── hotel.middleware.ts       # Middleware setup for file uploads (Multer)<br>
+│   │   └── validationErrorHandler.ts # Error handling middleware<br>
+│   ├── routes/<br>
+│   │   └── hotel.routes.ts           # API routes configuration<br>
+│   ├── models/<br>
+│   │   └── hotel.types.ts            # TypeScript types for data<br>
+│   ├── data/                         # Folder for JSON data files<br>
+|   ├── uploads/                      # Folder for storing uploaded images<br>
+|   |   └── rooms/                    # Folder for storing uploaded images-->Rooms<br>
+|   ├── validations/                  # Input validation rules and schemas<br>
+|   ├── app.ts                        # Main application file<br>
+|   └── server.ts                     # Server configuration and startup<br>
+|<br>
+├── _test_/                           # Folder containing test files<br>
+│   └── hotel.test.ts                 # Tests for API endpoints<br>
+├── hotel-api.postman_collection.json # Postman collection for API testing<br>
+├── jest.config.js                    # Jest testing configuration<br>
+├── package-lock.json                 <br>
+├── package.json                      # Project dependencies and scripts<br>
+├── README.md<br>
+└── tsconfig.json                     # TypeScript configuration<br>
 
 ## Running the Application
 
@@ -77,7 +77,7 @@ Compile the code by running:
 - `npx tsc`
 ### Step 2: Start the Server
 Start the server using:
-- `npm start`
+- `npm run dev`
 The API should now be running on http://localhost:5050.
 
 ## API Endpoints
